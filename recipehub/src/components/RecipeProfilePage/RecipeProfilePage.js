@@ -1,12 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import Swal from 'sweetalert2';
+import Table from 'react-bootstrap/Table';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+
+import RecipeProfileComponent from '../RecipeProfileComponent/RecipeProfileComponent';
 
 
-const RecipeProfilePage = () => (
-  <div>
-    RecipeProfilePage Component
-  </div>
-);
+
+
+const RecipeProfilePage = () => {
+  const [recipe, setRecipe] = useState();
+
+  const [loading, setLoading] = useState(true);
+
+  let { id } = useParams()
+
+  const fetchRecipe = async () => {
+    setLoading(true);
+    axios.get(axios.defaults.baseURL + 'Recipe/' + id)
+        .then(res => {
+            let recipe = res.data
+            console.log(recipe)
+            setRecipe(recipe);
+            //console.log(recipes);
+            setLoading(false);
+        }).catch(err => {
+            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.response.data,
+            });
+        });
+  };
+
+  useEffect(() => {
+    fetchRecipe();
+  }, [])
+
+  useEffect(() =>{
+    if(recipe)setLoading(false)
+    else setLoading(true)
+  }, [recipe])
+
+  const getRecipe = () => {
+      return recipe;
+  }
+
+  return(
+    <div>
+      ads
+    </div>
+  )
+
+}
 
 RecipeProfilePage.propTypes = {};
 

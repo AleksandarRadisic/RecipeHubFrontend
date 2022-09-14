@@ -7,6 +7,7 @@ import RecipeList from '../RecipeList/RecipeList';
 const RecipePage = () => {
   return(
     <div>
+      <h1>Most popular recipes</h1>
       <RecipeList/>
     </div>
   );

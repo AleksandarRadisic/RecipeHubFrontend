@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
+import Table from 'react-bootstrap/Table';
 
 import RecipeComponent from '../RecipeComponent/RecipeComponent'
 
@@ -46,10 +47,10 @@ const RecipeList = () => {
   }
 
   return(
-    <div>
+    <div class="container mb-3">
       {loading && <h3>Loading...</h3>}
       {!loading && recipes && 
-        <table>
+        <table class="table table-bordered table-striped table-hover">
           <thead>
             <tr>
               <th>Name</th>
