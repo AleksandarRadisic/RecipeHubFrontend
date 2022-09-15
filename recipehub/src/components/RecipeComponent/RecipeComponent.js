@@ -16,7 +16,7 @@ const RecipeComponent = (props) => {
         <td>{props.recipe.name}</td>
         <td>{props.recipe.description}</td>
         {props.recipe.rating === 0 && <td>No ratings</td>}
-        {props.recipe.rating !== 0 && <td>props.recipe.rating</td>}
+        {props.recipe.rating !== 0 && <td>{props.recipe.rating}</td>}
     </tr>
   )
 };

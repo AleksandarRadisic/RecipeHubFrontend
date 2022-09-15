@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import { BrowserRouter as Router, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 
 import RecipeProfileComponent from '../RecipeProfileComponent/RecipeProfileComponent';
+import Navbar from '../Navbar/Navbar';
 
 
 
@@ -20,38 +21,44 @@ const RecipeProfilePage = () => {
   const fetchRecipe = async () => {
     setLoading(true);
     axios.get(axios.defaults.baseURL + 'Recipe/' + id)
-        .then(res => {
-            let recipe = res.data
-            console.log(recipe)
-            setRecipe(recipe);
-            //console.log(recipes);
-            setLoading(false);
-        }).catch(err => {
-            console.log(err)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.response.data,
-            });
+      .then(res => {
+        let recipe = res.data
+        setRecipe(recipe);
+        setLoading(false);
+      }).catch(err => {
+        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data,
         });
+      });
   };
 
   useEffect(() => {
     fetchRecipe();
   }, [])
 
-  useEffect(() =>{
-    if(recipe)setLoading(false)
+  useEffect(() => {
+    if (recipe) setLoading(false)
     else setLoading(true)
   }, [recipe])
 
   const getRecipe = () => {
-      return recipe;
+    return recipe;
   }
 
-  return(
+  return (
     <div>
-      ads
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        {loading && <h3>Loading...</h3>}
+        {!loading && recipe &&
+          <RecipeProfileComponent recipe={recipe} />
+        }
+      </div>
     </div>
   )
 
