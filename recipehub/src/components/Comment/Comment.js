@@ -1,12 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 const Comment = (props) => {
 
   const reportFunc = () =>{
-    alert(props.comment.id)
-    window.location.reload(false);
+    if(props.postType === "recipe"){
+      axios.post(axios.defaults.baseURL + "Recipe/" + props.postId + "/comments/" + props.comment.id + "/report", {},
+       { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+       .then(res => {
+        console.log(res)
+        Swal.fire({
+          icon: 'success',
+          title: 'success',
+          text: res.data
+        })
+        .then(() =>{
+          window.location.reload(false);
+        })
+      }).catch(err => {
+        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data,
+        })
+      })
+    }
+    else{
+      axios.post(axios.defaults.baseURL + "Article/" + props.postId + "/comments/" + props.comment.id + "/report", {},
+       { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+       .then(res => {
+        console.log(res)
+        Swal.fire({
+          icon: 'success',
+          title: 'success',
+          text: res.data
+        })
+        window.location.reload(false);
+      }).catch(err => {
+        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data,
+        })
+      })
+    }
   }
 
   return(
@@ -14,7 +56,7 @@ const Comment = (props) => {
       <td>{props.comment.user.userName}</td>
       <td>{props.comment.text}</td>
       <td>{props.comment.rating}</td>
-      {!props.comment.report && props.ownerId === "e23396e1-1e2e-461c-aef0-1f4c4f90cba1" &&
+      {!props.comment.report && props.ownerId === localStorage.getItem('id') &&
         <td><button onClick={reportFunc} className="btn btn-primary"><strong>Report</strong></button></td>
       }
     </tr>

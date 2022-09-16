@@ -20,8 +20,11 @@ const RecipeProfileComponent = (props) => {
   }
 
   return(
-    <div className="container mb-3">    
+    <div className="container mb-3">   
+    {console.log(props.recipe)} 
       <h1>{props.recipe.recipe.name}</h1>
+      <br/>
+      <h2>Description</h2>
       <div className="panel-body">
         <p>{props.recipe.recipe.description}</p>
       </div>
@@ -33,19 +36,19 @@ const RecipeProfileComponent = (props) => {
       <br/>
       <h2>Instructions</h2>
       <div className="panel-body">
-        <p>{props.recipe.recipe.instructions}</p>
+        <textarea rows="14" readOnly={true} style={{resize: "none", width: "60%"}} value={props.recipe.recipe.instructions}/>
       </div>
-      <div style={{ width: "50%", height: "500px", margin: "auto"}}>
+      <br/>
+      <div>
         <ImageCarousel images={props.recipe.pictures}/>
       </div>
       {
-        props.recipe.recipe.userId === localStorage.getItem('id') && <button class="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
+        props.recipe.recipe.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
       }
       <br/>
       <br/>
-      <h2>Comments</h2>
       <div className='panel-footer'>
-        <CommentList comments={props.recipe.recipe.comments} ownerId={props.recipe.recipe.userId}/>
+        <CommentList comments={props.recipe.recipe.comments} ownerId={props.recipe.recipe.userId} postType="recipe" postId={props.recipe.recipe.id}/>
       </div>
     </div>
   )

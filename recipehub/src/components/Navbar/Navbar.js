@@ -23,24 +23,38 @@ const Navbar = () => {
                 <li className="nav-item" key={1}>
                     <a style={{ textDecoration: "none" }} href="/"><h1>RecipeHub</h1></a>
                 </li>
-                <li className="nav-item" key={2}>
-                    <a style={{ textDecoration: "none" }} href="/">Home</a>
-                </li>
+                {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Regular" &&
+                    <li className="nav-item" key={10}>
+                        <a style={{ textDecoration: "none" }} href="/my-recipes">My recipes</a>
+                    </li>
+                }
+                {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Regular" &&
+                    <li className="nav-item" key={11}>
+                        <a style={{ textDecoration: "none" }} href="/new-recipe">New recipe</a>
+                    </li>
+                }
+                {
+                    <li className="nav-item" key={29}>
+                        <a style={{ textDecoration: "none" }} href="/articles">Articles</a>
+                    </li>
+                }
                 {
                     !localStorage.getItem("id") &&
-                    <li className="nav-item" key={3}>
+                    <li className="nav-item" key={12}>
                         <a style={{ textDecoration: "none" }} href="/login">Login</a>
                     </li>
                 }
                 {
                     !localStorage.getItem("id") &&
-                    <li className="nav-item" key={4}>
+                    <li className="nav-item" key={13}>
                         <a style={{ textDecoration: "none" }} href="/registration">Registration</a>
                     </li>
                 }
                 {
                     localStorage.getItem("id") && 
-                    <li className="nav-item" key={4}>
+                    <li className="nav-item" key={14}>
                         <a style={{ textDecoration: "none" }} href="#" onClick={(e) => logOut(e)}>Log out</a>
                     </li>
                 }

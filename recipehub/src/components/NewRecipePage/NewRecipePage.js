@@ -5,10 +5,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import Navbar from '../Navbar/Navbar';
-import ImageEditTable from '../ImageEditTable/ImageEditTable';
 
-
-const UpdateRecipe = (props) => {
+const NewRecipePage = () => {
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -19,14 +17,12 @@ const UpdateRecipe = (props) => {
   const [ingredientsLoading, setIngredientsLoading] = useState(true)
   const [newIngrQuantity, setNewIngrQuantity] = useState(0)
 
-  let location = useLocation()
   let navigate = useNavigate()
 
   useEffect(() => {
-    if (location.state.recipe.userId !== localStorage.getItem('id')) {
+    if (!localStorage.getItem('id')) {
       navigate("/login")
     }
-    console.log(location.state)
     axios.get(axios.defaults.baseURL + 'Ingredients')
       .then(res => {
         let recipeArray = Array.from(res.data)
@@ -40,11 +36,7 @@ const UpdateRecipe = (props) => {
           text: err.response.data,
         });
       });
-    setName(location.state.recipe.name)
-    setDescription(location.state.recipe.description)
-    setInstructions(location.state.recipe.instructions)
-    setRecipeIngredients(location.state.recipe.recipeIngredients)
-    setLoading(false)
+      setLoading(false)
   }, [])
 
   const addIngredient = (e) => {
@@ -81,14 +73,14 @@ const UpdateRecipe = (props) => {
     setRecipeIngredients(newList)
   }
 
-  const updateRecipe = (e) => {
+  const addRecipe = (e) => {
     let body = {
       name: name,
       description: description,
       instructions: instructions,
       recipeIngredients: recipeIngredients
     }
-    axios.put(axios.defaults.baseURL + "Recipe/" + location.state.recipe.id, body, { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+    axios.post(axios.defaults.baseURL + "Recipe", body, { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
       .then(res => {
         console.log(res)
         Swal.fire({
@@ -96,7 +88,7 @@ const UpdateRecipe = (props) => {
           title: 'success',
           text: res.data
         })
-        navigate("/recipe/" + location.state.recipe.id)
+        navigate("/")
       }).catch(err => {
         console.log(err)
         Swal.fire({
@@ -126,7 +118,7 @@ const UpdateRecipe = (props) => {
           <br />
           <div>
             <h2 className="labels">Instructions</h2>
-            <textarea rows="14" style={{resize: "none", width: "100%"}} onChange={(e) => setInstructions(e.target.value)}>{instructions}</textarea>
+            <textarea rows="14" style={{ resize: "none", width: "100%" }} onChange={(e) => setInstructions(e.target.value)}>{instructions}</textarea>
           </div>
           <br />
           <div className="panel-heading m-3">
@@ -182,19 +174,16 @@ const UpdateRecipe = (props) => {
           }
           <br />
           <br />
-          <button className="btn btn-primary" onClick={(e) => updateRecipe(e)} disabled={name === '' || description === '' || instructions === '' || recipeIngredients.length === 0}><strong>Update recipe</strong></button>
-          <br />
-          <br />
-          <ImageEditTable pictures={location.state.pictures} postType="recipe" postId={location.state.recipe.id}/>
-        </div >
+          <button className="btn btn-primary" onClick={(e) => addRecipe(e)} disabled={name === '' || description === '' || instructions === '' || recipeIngredients.length === 0}><strong>Add recipe</strong></button>
+        </div>
       }
-    </div >
+    </div>
   )
 
 }
 
-UpdateRecipe.propTypes = {};
+NewRecipePage.propTypes = {};
 
-UpdateRecipe.defaultProps = {};
+NewRecipePage.defaultProps = {};
 
-export default UpdateRecipe;
+export default NewRecipePage;

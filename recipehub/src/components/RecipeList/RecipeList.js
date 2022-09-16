@@ -9,28 +9,36 @@ import RecipeComponent from '../RecipeComponent/RecipeComponent'
 
 
 const RecipeList = (props) => {
-  return(
-    <div class="container mb-3">
-        <table class="table table-bordered table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              
-              (props.recipes).map((recipe, index) => {
-                    return (
-                          <RecipeComponent recipe={recipe} key={recipe.id}/>
-                      )
-                    })
-            }
-          </tbody>
-        </table>
-    </div>
+  return (
+    <>
+      {props.recipes.length === 0 &&
+        <h2>No recipes</h2>
+      }
+      {
+        props.recipes.length > 0 &&
+        <div className="container mb-3">
+          <table className="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+
+                (props.recipes).map((recipe, index) => {
+                  return (
+                    <RecipeComponent recipe={recipe} key={recipe.id} />
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </>
   );
 };
 
