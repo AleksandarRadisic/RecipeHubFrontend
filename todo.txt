@@ -1,0 +1,8 @@
+brisanje artikala/recepata (admin i vlasnik)
+
+update profila i passworda (gotovo)
+admin -> blokiranje komentara (gotovo)
+admin -> banovanje korisnika (gotovo)
+admin -> ingredients (gotovo)
+prikaz ingredientsa? (gotovo)
+

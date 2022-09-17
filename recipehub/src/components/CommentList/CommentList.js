@@ -17,7 +17,7 @@ const CommentList = (props) => {
       if (props.comments[i].userId == localStorage.getItem('id'))
         commented = true;
     }
-    if (props.ownerId !== localStorage.getItem('id') && !commented && localStorage.getItem('token'))
+    if (props.ownerId !== localStorage.getItem('id') && !commented && localStorage.getItem('token') && props.postId && localStorage.getItem('role') === "Regular")
       setNewCommentAvailable(true)
   }, [])
 
@@ -32,10 +32,11 @@ const CommentList = (props) => {
         console.log(res)
         Swal.fire({
           icon: 'success',
-          title: 'success',
+          title: 'Success',
           text: res.data
+        }).then(() =>{
+          window.location.reload(false);
         })
-        window.location.reload(false);
       }).catch(err => {
         console.log(err)
         Swal.fire({
@@ -53,8 +54,9 @@ const CommentList = (props) => {
           icon: 'success',
           title: 'success',
           text: res.data
+        }).then(() =>{
+          window.location.reload(false);
         })
-        window.location.reload(false);
       }).catch(err => {
         console.log(err)
         Swal.fire({
@@ -70,7 +72,8 @@ const CommentList = (props) => {
     <>
       {props.comments.length > 0 &&
         <>
-          <h2>Comments</h2>
+          {props.postId && <h2>Comments</h2>}
+          {!props.postId && <h2>Reported comments</h2>}
           <table className="table table-bordered table-striped">
             <thead>
               <tr>

@@ -11,7 +11,7 @@ const Navbar = () => {
 
     let navigate = useNavigate()
 
-    const logOut = (e) =>{
+    const logOut = (e) => {
         e.preventDefault();
         localStorage.clear();
         navigate("/")
@@ -20,8 +20,11 @@ const Navbar = () => {
     return (
         <div className="m-4 p-1">
             <ul className="nav nav-pills nav-fill ">
+                <li className="nav-item" key={245}>
+                    <p style={{ textDecoration: "none" }} href="/"><h1>RecipeHub</h1></p>
+                </li>
                 <li className="nav-item" key={1}>
-                    <a style={{ textDecoration: "none" }} href="/"><h1>RecipeHub</h1></a>
+                    <a style={{ textDecoration: "none" }} href="/">Recipes</a>
                 </li>
                 {
                     localStorage.getItem("id") && localStorage.getItem("role") === "Regular" &&
@@ -41,6 +44,33 @@ const Navbar = () => {
                     </li>
                 }
                 {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Regular" &&
+                    <li className="nav-item" key={42}>
+                        <a style={{ textDecoration: "none" }} href="/my-articles">My articles</a>
+                    </li>
+                }
+                {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Regular" &&
+                    <li className="nav-item" key={55}>
+                        <a style={{ textDecoration: "none" }} href="/new-article">New article</a>
+                    </li>
+                }
+                <li className="nav-item" key={35}>
+                    <a style={{ textDecoration: "none" }} href="/ingredients">Ingredients</a>
+                </li>
+                {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Admin" &&
+                    <li className="nav-item" key={62}>
+                        <a style={{ textDecoration: "none" }} href="/reported-comments">Reported comments</a>
+                    </li>
+                }
+                {
+                    localStorage.getItem("id") && localStorage.getItem("role") === "Admin" &&
+                    <li className="nav-item" key={67}>
+                        <a style={{ textDecoration: "none" }} href="/suspicious-users">Suspicious users</a>
+                    </li>
+                }
+                {
                     !localStorage.getItem("id") &&
                     <li className="nav-item" key={12}>
                         <a style={{ textDecoration: "none" }} href="/login">Login</a>
@@ -53,7 +83,13 @@ const Navbar = () => {
                     </li>
                 }
                 {
-                    localStorage.getItem("id") && 
+                    localStorage.getItem("id") &&
+                    <li className="nav-item" key={43}>
+                        <a style={{ textDecoration: "none" }} href="/profile">Profile</a>
+                    </li>
+                }
+                {
+                    localStorage.getItem("id") &&
                     <li className="nav-item" key={14}>
                         <a style={{ textDecoration: "none" }} href="#" onClick={(e) => logOut(e)}>Log out</a>
                     </li>

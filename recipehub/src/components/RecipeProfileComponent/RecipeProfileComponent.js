@@ -16,45 +16,45 @@ const RecipeProfileComponent = (props) => {
 
   const goToUpdateRecipe = (e) => {
     e.preventDefault()
-    navigate('/update-recipe/' + props.recipe.recipe.id, {state: props.recipe})
+    navigate('/update-recipe/' + props.recipe.recipe.id, { state: props.recipe })
   }
 
-  return(
-    <div className="container mb-3">   
-    {console.log(props.recipe)} 
+  return (
+    <div className="container mb-3">
+      {console.log(props.recipe)}
       <h1>{props.recipe.recipe.name}</h1>
-      <br/>
+      <br />
       <h2>Description</h2>
       <div className="panel-body">
         <p>{props.recipe.recipe.description}</p>
       </div>
-      <br/>
+      <br />
       <h2>Ingredients</h2>
       <div className='panel-footer' style={{ width: "40%", margin: "auto" }}>
-        <RecipeIngredientList recipeIngredients={props.recipe.recipe.recipeIngredients}/>
+        <RecipeIngredientList recipeIngredients={props.recipe.recipe.recipeIngredients} />
       </div>
-      <br/>
+      <br />
       <h2>Instructions</h2>
       <div className="panel-body">
-        <textarea rows="14" readOnly={true} style={{resize: "none", width: "60%"}} value={props.recipe.recipe.instructions}/>
+        <textarea rows="14" readOnly={true} style={{ resize: "none", width: "60%" }} value={props.recipe.recipe.instructions} />
       </div>
-      <br/>
+      <br />
       <div>
-        <ImageCarousel images={props.recipe.pictures}/>
+        <ImageCarousel images={props.recipe.pictures} />
       </div>
       {
         props.recipe.recipe.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
       }
-      <br/>
-      <br/>
+      <br />
+      <br />
       <div className='panel-footer'>
-        <CommentList comments={props.recipe.recipe.comments} ownerId={props.recipe.recipe.userId} postType="recipe" postId={props.recipe.recipe.id}/>
+        <CommentList comments={props.recipe.recipe.comments} ownerId={props.recipe.recipe.userId} postType="recipe" postId={props.recipe.recipe.id} />
       </div>
     </div>
   )
 }
 
-  
+
 
 RecipeProfileComponent.propTypes = {};
 

@@ -2,27 +2,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
-import Table from 'react-bootstrap/Table';
-
-import Navbar from '../Navbar/Navbar';
-import RecipeList from '../RecipeList/RecipeList';
 import { useNavigate } from 'react-router-dom';
 
+import ArticleList from '../ArticleList/ArticleList'
+import Navbar from '../Navbar/Navbar';
 
-const MyRecipes = () => {
-  const [recipes, setRecipes] = useState([]);
+
+const MyArticles = () => {
+  const [articles, setArticles] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   let navigate = useNavigate()
 
-  const fetchRecipes = async () => {
+  const fetchArticles = async () => {
     setLoading(true);
-    axios.get(axios.defaults.baseURL + 'Recipe/logged-user',
-     { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+    axios.get(axios.defaults.baseURL + 'Article/logged-user', 
+    { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
       .then(res => {
-        let recipeArray = Array.from(res.data)
-        setRecipes(recipeArray);
+        let articleArray = Array.from(res.data)
+        setArticles(articleArray);
         setLoading(false);
       }).catch(err => {
         console.log(err)
@@ -38,38 +37,40 @@ const MyRecipes = () => {
     if(!localStorage.getItem('token') || localStorage.getItem('role') !== "Regular"){
       navigate("/login")
     }
-    fetchRecipes();
+    fetchArticles();
   }, [])
 
   useEffect(() => {
-    console.log(recipes)
-    if (recipes) setLoading(false)
+    console.log(articles)
+    if (articles) setLoading(false)
     else setLoading(true)
-  }, [recipes])
+  }, [articles])
 
-  const getRecipes = () => {
-    return recipes;
+  const getArticles = () => {
+    return articles;
   }
 
-  return(
+  return (
     <div>
       <div>
         <Navbar />
       </div>
       {loading && <h3>Loading...</h3>}
-      {!loading && recipes &&
+      {!loading && articles &&
         <div>
 
-          <h1>My recipes</h1>
-          <RecipeList recipes={getRecipes()} />
+          <h1>Most popular articles</h1>
+          <ArticleList articles={getArticles()} />
         </div>
       }
     </div>
-  )
+  );
+
 }
 
-MyRecipes.propTypes = {};
 
-MyRecipes.defaultProps = {};
+MyArticles.propTypes = {};
 
-export default MyRecipes;
+MyArticles.defaultProps = {};
+
+export default MyArticles;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+
 import RecipeProfilePage from '../RecipeProfilePage/RecipeProfilePage';
 
 

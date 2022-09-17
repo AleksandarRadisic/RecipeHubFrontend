@@ -20,7 +20,7 @@ const NewRecipePage = () => {
   let navigate = useNavigate()
 
   useEffect(() => {
-    if (!localStorage.getItem('id')) {
+    if (!localStorage.getItem('id') || localStorage.getItem('role') !== "Regular") {
       navigate("/login")
     }
     axios.get(axios.defaults.baseURL + 'Ingredients')

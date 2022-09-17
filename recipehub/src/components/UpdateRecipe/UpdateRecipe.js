@@ -126,7 +126,7 @@ const UpdateRecipe = (props) => {
           <br />
           <div>
             <h2 className="labels">Instructions</h2>
-            <textarea rows="14" style={{resize: "none", width: "100%"}} onChange={(e) => setInstructions(e.target.value)}>{instructions}</textarea>
+            <textarea rows="14" style={{ resize: "none", width: "100%" }} onChange={(e) => setInstructions(e.target.value)}>{instructions}</textarea>
           </div>
           <br />
           <div className="panel-heading m-3">
@@ -162,16 +162,17 @@ const UpdateRecipe = (props) => {
               <table style={{ width: "100%" }}>
                 <tbody>
                   <tr>
-                    <td style={{ width: "50%" }}><select className="form-select" aria-label="Default select example" autoComplete='true' value={selectedIngredient} onChange={(e) => setSelectedIngredient(e.target.value)}>
-                      {!selectedIngredient && <option value=''>Please select new ingredient</option>}
-                      {(allIngredients).map((ingredient) => {
-                        return (
-                          <option key={ingredient.id} value={ingredient.id}>
-                            {ingredient.name}
-                          </option>
-                        )
-                      })}
-                    </select>
+                    <td style={{ width: "50%" }}>
+                      <select className="form-select" aria-label="Default select example" autoComplete='true' value={selectedIngredient} onChange={(e) => setSelectedIngredient(e.target.value)}>
+                        {!selectedIngredient && <option value=''>Please select new ingredient</option>}
+                        {(allIngredients).map((ingredient) => {
+                          return (
+                            <option key={ingredient.id} value={ingredient.id}>
+                              {ingredient.name}
+                            </option>
+                          )
+                        })}
+                      </select>
                     </td>
                     <td><input style={{ width: "100%" }} type="number" min="0" value={newIngrQuantity} className="form-control mb-1" onChange={(e) => setNewIngrQuantity(e.target.value)} placeholder='quantity' /></td>
                   </tr>
@@ -185,7 +186,7 @@ const UpdateRecipe = (props) => {
           <button className="btn btn-primary" onClick={(e) => updateRecipe(e)} disabled={name === '' || description === '' || instructions === '' || recipeIngredients.length === 0}><strong>Update recipe</strong></button>
           <br />
           <br />
-          <ImageEditTable pictures={location.state.pictures} postType="recipe" postId={location.state.recipe.id}/>
+          <ImageEditTable pictures={location.state.pictures} postType="recipe" postId={location.state.recipe.id} />
         </div >
       }
     </div >
