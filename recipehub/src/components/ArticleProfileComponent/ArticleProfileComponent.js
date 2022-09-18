@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import Table from 'react-bootstrap/Table';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
 import CommentList from '../CommentList/CommentList';
@@ -16,6 +17,43 @@ const ArticleProfileComponent = (props) => {
   const goToUpdateArticle = (e) => {
     e.preventDefault()
     navigate('/update-article/' + props.article.article.id, { state: props.article })
+  }
+
+  const deleteArticle = (e) => {
+    e.preventDefault()
+    confirmAlert({
+      title: "Are you sure?",
+      message: "Are you sure you want to delete this article?",
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            axios.delete(axios.defaults.baseURL + "Article/" + props.article.article.id,
+              { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+              .then(res => {
+                console.log(res)
+                Swal.fire({
+                  icon: 'success',
+                  title: 'success',
+                  text: res.data
+                })
+                navigate("/articles")
+              }).catch(err => {
+                console.log(err)
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: err.response.data,
+                })
+              })
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    })
   }
 
   return (
@@ -31,9 +69,20 @@ const ArticleProfileComponent = (props) => {
       <div>
         <ImageCarousel images={props.article.pictures} />
       </div>
-      {
-        props.article.article.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateArticle(e)}><strong>Update article</strong></button>
-      }
+      <div style={{ margin: "auto" }}>
+        {
+          props.article.article.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateArticle(e)}><strong>Update article</strong></button>
+        }
+        {
+          props.article.article.userId === localStorage.getItem('id') &&
+          <div style={{ display: "inline-block", marginLeft: "5%" }}></div>
+        }
+        {
+          (props.article.article.userId === localStorage.getItem('id') || localStorage.getItem('role') === "Admin") &&
+          <button className="btn btn-primary" onClick={(e) => deleteArticle(e)} style={{ background: "red", border: "1px solid red" }}><strong>Delete article</strong></button>
+        }
+      </div>
+
       <br />
       <br />
       <div className='panel-footer'>

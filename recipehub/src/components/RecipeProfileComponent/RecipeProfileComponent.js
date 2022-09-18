@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import Table from 'react-bootstrap/Table';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 
 import RecipeIngredientList from '../RecipeIngredientList/RecipeIngredientList';
 import ImageCarousel from '../ImageCarousel/ImageCarousel';
@@ -17,6 +18,43 @@ const RecipeProfileComponent = (props) => {
   const goToUpdateRecipe = (e) => {
     e.preventDefault()
     navigate('/update-recipe/' + props.recipe.recipe.id, { state: props.recipe })
+  }
+
+  const deleteRecipe = (e) => {
+    e.preventDefault()
+    confirmAlert({
+      title: "Are you sure?",
+      message: "Are you sure you want to delete this recipe?",
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            axios.delete(axios.defaults.baseURL + "Recipe/" + props.recipe.recipe.id,
+              { headers: { 'Authorization': "Bearer " + localStorage.getItem('token') } })
+              .then(res => {
+                console.log(res)
+                Swal.fire({
+                  icon: 'success',
+                  title: 'success',
+                  text: res.data
+                })
+                navigate("/")
+              }).catch(err => {
+                console.log(err)
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: err.response.data,
+                })
+              })
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    })
   }
 
   return (
@@ -42,9 +80,19 @@ const RecipeProfileComponent = (props) => {
       <div>
         <ImageCarousel images={props.recipe.pictures} />
       </div>
-      {
-        props.recipe.recipe.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
-      }
+      <div style={{ margin: "auto" }}>
+        {
+          props.recipe.recipe.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
+        }
+        {
+          props.recipe.recipe.userId === localStorage.getItem('id') &&
+          <div style={{ display: "inline-block", marginLeft: "5%" }}></div>
+        }
+        {
+          (props.recipe.recipe.userId === localStorage.getItem('id') || localStorage.getItem('role') === "Admin") &&
+          <button className="btn btn-primary" onClick={(e) => deleteRecipe(e)} style={{ background: "red", border: "1px solid red" }}><strong>Delete recipe</strong></button>
+        }
+      </div>
       <br />
       <br />
       <div className='panel-footer'>

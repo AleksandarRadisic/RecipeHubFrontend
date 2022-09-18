@@ -1,4 +1,4 @@
-brisanje artikala/recepata (admin i vlasnik)
+brisanje artikala/recepata (admin i vlasnik) (gotovo)
 
 update profila i passworda (gotovo)
 admin -> blokiranje komentara (gotovo)

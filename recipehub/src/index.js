@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
