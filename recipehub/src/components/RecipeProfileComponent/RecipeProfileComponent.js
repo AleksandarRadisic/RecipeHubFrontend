@@ -80,6 +80,10 @@ const RecipeProfileComponent = (props) => {
       <div>
         <ImageCarousel images={props.recipe.pictures} />
       </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <div style={{ margin: "auto" }}>
         {
           props.recipe.recipe.userId === localStorage.getItem('id') && <button className="btn btn-primary" onClick={(e) => goToUpdateRecipe(e)}><strong>Update recipe</strong></button>
