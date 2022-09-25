@@ -59,7 +59,6 @@ const Registration = () => {
       "lastName": lastName,
       "email": email,
     };
-    //console.log(registration)
     axios.post(axios.defaults.baseURL + 'users/register', registration)
       .then(res => {
         console.log(res)
